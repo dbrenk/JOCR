@@ -10,9 +10,13 @@ licenses:
 http://www.apache.org/licenses/LICENSE-2.0.html
 http://www.gnu.org/licenses/lgpl.html
 
-HOWTO:
-you have to give me 3 parameters: mode (-OCR/-READ/-AUTO), infile (PDF/TIF/BMP/PNG) and outfile (TXT)";
 
--OCR  : using tesseract for character recognition
--READ : using pdfbox to extract text from "text-based" PDF files
--AUTO : tries to extract text with pdfbox and fallback to tesseract if it is not a text-based PDF file
+There are different modes how to use this Program:
+
+1. OCR mode:  has 4 parameters: lang (-DEU/-ENG), mode (-OCR/-READ/-AUTO), infile (PDF/BMP/TIF/PNG) and outfile (TXT)
+	-OCR  : using tesseract for character recognition
+	-READ : using pdfbox to extract text from "text-based" PDF files
+	-AUTO : tries to extract text with pdfbox and fallback to tesseract if it is not a text-based PDF file
+
+2. WhiteOnWhite Overlay mode: has 5 parameters: mode (-OVERLAY), infile (PDF), outfile (PDF), text (String) and color (Color.WHITE/Color.BLACK)
+	The overlay text is written on every page of the original document, the original is not changed
