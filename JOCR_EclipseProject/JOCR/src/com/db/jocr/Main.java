@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.Overlay;
 import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.exceptions.COSVisitorException;
@@ -24,6 +25,7 @@ import net.sourceforge.tess4j.TesseractException;
 
 public class Main {
 	static String tempDir;
+	private static Logger logger = Logger.getLogger( Main.class );
 
 
 	public static void main(String[] args) {
@@ -124,6 +126,7 @@ public class Main {
 	    } catch (IOException e) {
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();
+	        logger.error(e.getMessage());
 	        } 
 	    }
 		
@@ -150,8 +153,10 @@ public class Main {
 
         } catch (TesseractException e) {
             System.err.println(e.getMessage());
+            logger.error(e.getMessage());
         } catch (Exception e){
         	System.err.println(e.getMessage());
+        	logger.error(e.getMessage());
         }
 
         
@@ -188,6 +193,7 @@ public class Main {
 			System.out.println(pathOutputDoc);
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 			return false;
 		} 
 		

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.*;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -14,12 +15,16 @@ import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import com.db.jocr.Main;
+
 public class TestMain {
 	
 	static String tempDir;
+	private static Logger logger = Logger.getLogger( Main.class );
 
 	public static void main(String[] args) {
-		System.out.println(overlay("./in/צה.pdf", "./in/צה_overlay.pdf", "TestText", Color.WHITE));
+		//System.out.println(overlay("./in/צה.pdf", "./in/צה_overlay.pdf", "TestText", Color.WHITE));
+		logger.debug("Test");
 		
 	}
 	
