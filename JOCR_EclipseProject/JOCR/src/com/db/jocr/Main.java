@@ -9,10 +9,12 @@ import java.io.PrintStream;
 
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.Overlay;
+import org.apache.pdfbox.OverlayPDF;
 import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
@@ -87,7 +89,7 @@ public class Main {
 				ocolor = Color.BLACK;
 			}
 			System.out.println("color: " + ocolor.toString());
-			Boolean ok = overlay(infile, outfile, text, ocolor);
+			Boolean ok = overlayPDF(infile, outfile, text, ocolor);
 			
 		}else{
 			System.out.println("There are different modes how to use this Program:");
@@ -188,6 +190,8 @@ public class Main {
     		}
 
 			Overlay overlay = new Overlay();
+			PDDocumentInformation docinfo = realDoc.getDocumentInformation();
+			logger.info("PDF document title: " + docinfo.getTitle());
 			overlay.overlay(realDoc,watermarkDoc);
 			watermarkDoc.save(pathOutputDoc);
 			System.out.println(pathOutputDoc);
@@ -199,6 +203,51 @@ public class Main {
 		
 		return true;
 	}
+	
+	public static Boolean overlayPDF(String pathInputDoc, String pathOutputDoc, String text, Color color){
+		int pageCount = 0; 
+		PDDocument watermarkDoc = null;
+		PDDocument realDoc = null;
+		try{				
+			tempDir = System.getProperty("java.io.tmpdir");
+			realDoc = PDDocument.load(pathInputDoc);
+			pageCount = realDoc.getPageCount();
+			System.out.println("PageCount: " + pageCount);
+			
+			String pathWatermarkDoc = createWhiteOnWhiteDoc(text, pageCount, color);
+			watermarkDoc = PDDocument.load(pathWatermarkDoc);
+			System.out.println("PageCount: " + watermarkDoc.getPageCount());
+
+			
+    
+
+			//OverlayPDF overlay = new OverlayPDF();
+			//java -jar pdfbox-app-1.8.9.jar OverlayPDF "Elektronik ERECH BC.pdf" "TESTOVERLAY.pdf" "out.pdf"
+			String[] args = {pathInputDoc, pathWatermarkDoc, pathOutputDoc};
+			for(int i = 0; i < args.length; i++){
+				System.out.println(args[i]);
+			}
+			
+			//overlay.main(args);
+			OverlayPDF.main(args);
+			//overlay.overlay(realDoc,watermarkDoc);
+			//watermarkDoc.save(pathOutputDoc);
+			System.out.println(pathOutputDoc);
+			
+			File file = new File(pathWatermarkDoc);
+   		 
+    		if(file.delete()){
+    			System.out.println(file.getName() + " is deleted!");
+    		}else{
+    			System.out.println("Delete operation is failed.");
+    		}
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		} 
+		return true;
+	}
+	
 	
 	
 	private static String createWhiteOnWhiteDoc(String text, int pageCount, Color color) throws COSVisitorException, IOException{

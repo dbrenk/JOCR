@@ -23,7 +23,8 @@ public class TestMain {
 	private static Logger logger = Logger.getLogger( Main.class );
 
 	public static void main(String[] args) {
-		//System.out.println(overlay("./in/צה.pdf", "./in/צה_overlay.pdf", "TestText", Color.WHITE));
+		//System.out.println(overlay("./in/Elektronik ERECH BC.pdf", "./in/Elektronik ERECH BC_overlay.pdf", "TestText", Color.WHITE));
+		System.out.println(overlayPDF("./in/Elektronik ERECH BC.pdf", "./in/Elektronik ERECH BC_overlay.pdf", "OverlayTest _ blank example test", Color.WHITE));
 		logger.debug("Test");
 		
 	}
@@ -60,6 +61,50 @@ public class TestMain {
 			return false;
 		} 
 		
+		return true;
+	}
+	
+	public static Boolean overlayPDF(String pathInputDoc, String pathOutputDoc, String text, Color color){
+		int pageCount = 0; 
+		PDDocument watermarkDoc = null;
+		PDDocument realDoc = null;
+		try{				
+			tempDir = System.getProperty("java.io.tmpdir");
+			realDoc = PDDocument.load(pathInputDoc);
+			pageCount = realDoc.getPageCount();
+			System.out.println("PageCount: " + pageCount);
+			
+			String pathWatermarkDoc = createWhiteOnWhiteDoc(text, pageCount, color);
+			watermarkDoc = PDDocument.load(pathWatermarkDoc);
+			System.out.println("PageCount: " + watermarkDoc.getPageCount());
+
+			
+    
+
+			//OverlayPDF overlay = new OverlayPDF();
+			//java -jar pdfbox-app-1.8.9.jar OverlayPDF "Elektronik ERECH BC.pdf" "TESTOVERLAY.pdf" "out.pdf"
+			String[] args = {pathInputDoc, pathWatermarkDoc, pathOutputDoc};
+			for(int i = 0; i < args.length; i++){
+				System.out.println(args[i]);
+			}
+			
+			//overlay.main(args);
+			OverlayPDF.main(args);
+			//overlay.overlay(realDoc,watermarkDoc);
+			//watermarkDoc.save(pathOutputDoc);
+			System.out.println(pathOutputDoc);
+			
+			File file = new File(pathWatermarkDoc);
+   		 
+    		if(file.delete()){
+    			System.out.println(file.getName() + " is deleted!");
+    		}else{
+    			System.out.println("Delete operation is failed.");
+    		}
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		} 
 		return true;
 	}
 	

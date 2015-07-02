@@ -1,1 +1,9 @@
 2015-07-01 17:31:48 ERROR Main:196 - Layout pages with COSArray currently not supported.
+2015-07-02 08:50:33 INFO  Main:193 - PDF document title: Microsoft Word - ProdLight-BIS2007-lncs.doc
+2015-07-02 08:52:31 INFO  Main:193 - PDF document title: null
+2015-07-02 08:52:31 ERROR Main:199 - Layout pages with COSArray currently not supported.
+2015-07-02 09:10:51 INFO  Main:193 - PDF document title: null
+2015-07-02 09:10:51 ERROR Main:199 - Layout pages with COSArray currently not supported.
+2015-07-02 14:11:48 DEBUG Main:28 - Test
+2015-07-02 14:40:29 DEBUG Main:28 - Test
+2015-07-02 14:45:02 DEBUG Main:28 - Test
