@@ -11,6 +11,8 @@ Dim oFile
 Dim folder
 Set folder = fso.getFolder("./in/process")
 For Each oFile in folder.Files
+	'ShortPath follows the 8.3 notation -> it was necessary here,
+	'because parameters with german "umlaut" characters (ö,ä,ü) caused problems in oShell.run
 	file = oFile.ShortPath
 	'msgbox file
 	'shellCommand="JOCR.jar " & "-AUTO " & file & " " & strTempFile
